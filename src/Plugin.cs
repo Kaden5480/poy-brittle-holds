@@ -15,7 +15,7 @@ namespace BrittleHolds {
 
             SceneManager.sceneLoaded += OnSceneLoaded;
 
-            CommonAwake();
+            StartCoroutine(LoadCrumbleSound());
         }
 
         public void OnDestroy() {
@@ -35,7 +35,7 @@ using MelonLoader;
 namespace BrittleHolds {
     public class Plugin: MelonMod {
         public override void OnInitializeMelon() {
-            CommonAwake();
+            MelonCoroutines.Start(LoadCrumbleSound());
         }
 
         public override void OnSceneWasLoaded(int buildIndex, string sceneName) {
@@ -98,10 +98,6 @@ namespace BrittleHolds {
             if (collider.sharedMesh != null) {
                 filter.sharedMesh = collider.sharedMesh;
             }
-        }
-
-        private void CommonAwake() {
-            StartCoroutine(LoadCrumbleSound());
         }
 
         private void CommonSceneLoad() {
