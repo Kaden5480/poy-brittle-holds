@@ -7,6 +7,8 @@ A
 [Peaks of Yore](https://store.steampowered.com/app/2236070/)
 mod which makes many holds brittle (breakable after a few grabs).
 
+![Brittle Holds Demo](assets/demo.gif)
+
 # Overview
 - [Installing](#installing)
     - [BepInEx](#bepinex)
