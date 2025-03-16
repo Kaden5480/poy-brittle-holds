@@ -6,8 +6,12 @@ using Random = UnityEngine.Random;
 
 namespace BrittleHolds {
     public class BrittleHold : MonoBehaviour {
-        private const int maxHp = 4;
-        private int hp = maxHp;
+        private static Cfg config {
+            get => Plugin.instance.config;
+        }
+
+        private int maxHp = config.maxHp.Value;
+        private int hp = config.maxHp.Value;
 
         public AudioSource source;
 

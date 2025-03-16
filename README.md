@@ -36,7 +36,7 @@ If you haven't installed MelonLoader yet, follow the install instructions here:
 - [Linux](https://github.com/Kaden5480/modloader-instructions#melonloader-linux)
 
 ### Brittle Holds
-- Download the latest release
+- Download the latest MelonLoader release
 [here](https://github.com/Kaden5480/poy-brittle-holds/releases).
 - The compressed zip file will contain a `Mods` directory.
 - Copy the files from `Mods` to `Mods` in your game directory.

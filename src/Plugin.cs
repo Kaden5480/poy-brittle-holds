@@ -1,17 +1,24 @@
 using System.Collections;
 
-using HarmonyLib;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 #if BEPINEX
 using BepInEx;
+using HarmonyLib;
 
 namespace BrittleHolds {
     [BepInPlugin("com.github.Kaden5480.poy-brittle-holds", "BrittleHolds", PluginInfo.PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin {
         public void Awake() {
+            instance = this;
+
             Harmony.CreateAndPatchAll(typeof(Patches.PatchClimbing));
+
+            config.maxHp = Config.Bind(
+                "General", "maxHp", defaultMaxHp,
+                "The max HP to set on holds before they break"
+            );
 
             SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -28,6 +35,7 @@ namespace BrittleHolds {
 
 #elif MELONLOADER
 using MelonLoader;
+using MelonLoader.Utils;
 
 [assembly: MelonInfo(typeof(BrittleHolds.Plugin), "BrittleHolds", PluginInfo.PLUGIN_VERSION, "Kaden5480")]
 [assembly: MelonGame("TraipseWare", "Peaks of Yore")]
@@ -35,6 +43,15 @@ using MelonLoader;
 namespace BrittleHolds {
     public class Plugin: MelonMod {
         public override void OnInitializeMelon() {
+            instance = this;
+
+            string path = $"{MelonEnvironment.UserDataDirectory}/com.github.Kaden5480.poy-brittle-holds.cfg";
+
+            MelonPreferences_Category general = MelonPreferences.CreateCategory("BrittleHolds_General");
+            general.SetFilePath(path);
+
+            config.maxHp = general.CreateEntry("maxHp", defaultMaxHp);
+
             MelonCoroutines.Start(LoadCrumbleSound());
         }
 
@@ -43,6 +60,11 @@ namespace BrittleHolds {
         }
 
 #endif
+
+        public static Plugin instance = null;
+
+        private const int defaultMaxHp = 4;
+        public Cfg config { get; } = new Cfg();
 
         AudioClip crumblingHoldClip = null;
 
